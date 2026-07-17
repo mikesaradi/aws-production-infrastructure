@@ -133,6 +133,65 @@ Internet Gateway
         |
 CloudWatch Monitoring
         |
+```
+## Screenshots
+
+The following screenshots show the main components of the AWS infrastructure that were created for this project.
+
+### VPC Configuration
+
+![VPC Configuration](screenshots/vpcs.png)
+
+---
+
+### Subnet Configuration
+
+#### Public Subnets
+
+![Public Subnet A](screenshots/public-subnet-A.png)
+
+![Public Subnet B](screenshots/public-subnet-B.png)
+
+#### Private Subnets
+
+![Private Subnet A](screenshots/private-subnet-A.png)
+
+![Private Subnet B](screenshots/private-subnet-B.png)
+
+---
+
+### Application Load Balancer
+
+![Application Load Balancer](screenshots/alb.png)
+
+---
+
+### Target Group Health Checks
+
+The Target Group health checks confirm that the EC2 instances behind the Load Balancer are healthy and receiving traffic correctly.
+
+![Target Group Healthy](screenshots/target-group-healthy.png)
+
+---
+
+### Auto Scaling Group
+
+![Auto Scaling Group](screenshots/autoscaling.png)
+
+---
+
+### CloudWatch Monitoring
+
+![CloudWatch Dashboard](screenshots/cloudwatch-dashboard.png)
+
+---
+
+### CloudWatch Alarms
+
+![CloudWatch Alarm 1](screenshots/cloudwatch-alarm-1.png)
+
+![CloudWatch Alarm 2](screenshots/cloudwatch-alarm-2.png)
+
         |
 SNS Notifications
 ```

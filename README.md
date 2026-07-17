@@ -133,6 +133,9 @@ Internet Gateway
         |
 CloudWatch Monitoring
         |
+        |
+SNS Notifications
+
 ```
 ## Screenshots
 
@@ -192,6 +195,4 @@ The Target Group health checks confirm that the EC2 instances behind the Load Ba
 
 ![CloudWatch Alarm 2](screenshots/cloudwatch-alarm-2.png)
 
-        |
-SNS Notifications
-```
+

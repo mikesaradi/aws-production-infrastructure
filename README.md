@@ -97,24 +97,44 @@ In the future I would like to extend this project by adding:
 ## Architecture
 
 The infrastructure follows this design:
+                         Internet
+                            |
+                            |
+                    Internet Gateway
+                            |
+                            |
+              +---------------------------+
+              |        Production VPC     |
+              |        10.0.0.0/16        |
+              |                           |
+              |  +---------------------+  |
+              |  | Public Subnet       |  |
+              |  |                     |  |
+              |  | Application         |  |
+              |  | Load Balancer       |  |
+              |  +----------+----------+  |
+              |             |             |
+              |             |             |
+              |       Target Group        |
+              |             |             |
+              |             |             |
+              |  +---------------------+  |
+              |  | Private Subnets     |  |
+              |  |                     |  |
+              |  | Auto Scaling Group  |  |
+              |  |                     |  |
+              |  | EC2 Instance        |  |
+              |  | 10.0.11.x           |  |
+              |  |                     |  |
+              |  | EC2 Instance        |  |
+              |  | 10.0.12.x           |  |
+              |  +---------------------+  |
+              |                           |
+              +---------------------------+
 
-```text
-Internet
-    |
-Internet Gateway
-    |
-Application Load Balancer
-    |
-Target Group
-    |
-+-----------------------------+
-| Auto Scaling Group          |
-|                             |
-| EC2 Instance (Private)      |
-| EC2 Instance (Private)      |
-+-----------------------------+
-    |
-CloudWatch
-    |
-SNS Notifications
-```
+                            |
+                            |
+                    CloudWatch Monitoring
+                            |
+                            |
+                    SNS Notifications

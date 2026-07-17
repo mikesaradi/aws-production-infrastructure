@@ -98,8 +98,7 @@ In the future I would like to extend this project by adding:
 
 The infrastructure follows this design:
   
-                            |
-                    SNS Notifications
+                    
 ```text
 Internet
     |

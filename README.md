@@ -1,198 +1,161 @@
 # AWS Production Infrastructure
 
-## Overview
+Production-style AWS infrastructure lab focused on network architecture,
+high availability, load balancing, monitoring, and security controls.
 
-This project was built to practice creating a production-style infrastructure in AWS.
+## Objective
 
-Instead of launching a single EC2 instance, I wanted to build an environment that follows common AWS architecture practices such as high availability, load balancing, monitoring and network security.
+The objective of this project was to design and deploy a production-style AWS
+environment rather than a single standalone EC2 instance.
 
-The project helped me understand how different AWS services work together in a real infrastructure.
-
----
+The project focuses on understanding how AWS networking, compute, load
+balancing, monitoring, and access controls work together.
 
 ## AWS Services
 
-* Amazon VPC
-* Public & Private Subnets
-* Internet Gateway
-* Route Tables
-* Application Load Balancer (ALB)
-* Target Group
-* EC2
-* Auto Scaling Group
-* Launch Template
-* Security Groups
-* Amazon CloudWatch
-* Amazon SNS
-* IAM
+- Amazon VPC
+- Public and Private Subnets
+- Internet Gateway
+- Route Tables
+- Application Load Balancer (ALB)
+- Target Groups
+- Amazon EC2
+- Auto Scaling Group
+- Launch Template
+- Security Groups
+- Amazon CloudWatch
+- Amazon SNS
+- AWS IAM
 
----
+## Architecture
+
+Internet
+    |
+    v
+Internet Gateway
+    |
+    v
++-----------------------------+
+|         AWS VPC             |
+|         10.0.0.0/16         |
+|                             |
+|  +-----------------------+  |
+|  | Public Subnets        |  |
+|  |                       |  |
+|  | Application Load      |  |
+|  | Balancer              |  |
+|  +-----------+-----------+  |
+|              |              |
+|         Target Group        |
+|              |              |
+|  +-----------------------+  |
+|  | Private Subnets       |  |
+|  |                       |  |
+|  | Auto Scaling Group    |  |
+|  |                       |  |
+|  | EC2      EC2          |  |
+|  +-----------------------+  |
++-----------------------------+
+
+             |
+             v
+       CloudWatch
+             |
+             v
+            SNS
 
 ## What I Built
 
-* Created a custom VPC.
-* Configured public and private subnets across multiple Availability Zones.
-* Deployed an Application Load Balancer.
-* Created a Target Group with health checks.
-* Created a Launch Template.
-* Configured an Auto Scaling Group.
-* Installed and configured Nginx on EC2 instances using User Data.
-* Configured CloudWatch alarms.
-* Created an SNS topic for notifications.
-* Built a CloudWatch dashboard for monitoring.
+- Created a custom VPC.
+- Configured public and private subnets across multiple Availability Zones.
+- Configured route tables and Internet Gateway connectivity.
+- Deployed an Application Load Balancer.
+- Created a Target Group with health checks.
+- Created a Launch Template.
+- Configured an Auto Scaling Group.
+- Installed and configured Nginx on EC2 instances using User Data.
+- Configured CloudWatch alarms.
+- Created an SNS topic for notifications.
+- Built a CloudWatch monitoring dashboard.
 
----
+## Security Architecture
 
-## Security
+The infrastructure incorporates several basic security controls:
 
-Some security practices used in this project include:
-
-* EC2 instances are deployed inside private subnets.
-* The Application Load Balancer receives incoming HTTP traffic.
-* Security Groups allow only the required traffic between resources.
-* SSH access is restricted.
-* CloudWatch alarms notify when important metrics change.
-
----
+- EC2 instances are deployed in private subnets.
+- The Application Load Balancer provides the public-facing entry point.
+- Security Groups restrict traffic between infrastructure components.
+- SSH access is restricted rather than exposed broadly.
+- CloudWatch provides monitoring for infrastructure activity and health.
+- SNS is used to deliver monitoring notifications.
 
 ## Monitoring
 
 The CloudWatch dashboard monitors:
 
-* EC2 CPU Utilization
-* Healthy Host Count
-* ALB Request Count
+- EC2 CPU Utilization
+- ALB Request Count
+- Healthy Host Count
 
-CloudWatch alarms were also created for:
+Configured alarms include:
 
-* High CPU utilization
-* Healthy target monitoring
+- High CPU utilization
+- Healthy target monitoring
 
 Notifications are delivered through Amazon SNS.
 
----
+## Security Considerations
+
+This project demonstrates several important cloud security concepts:
+
+- Network segmentation
+- Public/private subnet separation
+- Restricted security group rules
+- Controlled administrative access
+- Infrastructure monitoring
+- High-availability architecture
 
 ## What I Learned
 
-Building this project helped me understand how AWS networking and infrastructure components work together.
+This project improved my understanding of how AWS networking and
+infrastructure components interact in a production-style environment.
 
-I became more comfortable working with VPCs, subnets, security groups, Application Load Balancers, Auto Scaling Groups and CloudWatch. It also gave me a better understanding of designing a more secure and highly available environment instead of deploying a single server.
-
----
+I gained hands-on experience with VPCs, subnets, routing, security groups,
+Application Load Balancers, Auto Scaling Groups, EC2, CloudWatch, and SNS.
 
 ## Future Improvements
 
-In the future I would like to extend this project by adding:
+Potential extensions include:
 
-* AWS WAF
-* AWS GuardDuty
-* AWS CloudTrail
-* AWS Config
-* Terraform
-* CI/CD pipeline
-* Docker deployment
+- AWS WAF
+- AWS GuardDuty
+- AWS CloudTrail
+- AWS Config
+- Terraform infrastructure as code
+- CI/CD integration
+- Docker-based deployment
 
----
-
-## Architecture
-
-The infrastructure follows this design:
-  
-                    
-```text
-Internet
-    |
-    |
-Internet Gateway
-    |
-    |
-+---------------------------+
-|        Production VPC     |
-|        10.0.0.0/16        |
-|                           |
-|  +---------------------+  |
-|  | Public Subnet       |  |
-|  |                     |  |
-|  | Application         |  |
-|  | Load Balancer       |  |
-|  +----------+----------+  |
-|             |             |
-|       Target Group        |
-|             |             |
-|  +---------------------+  |
-|  | Private Subnets     |  |
-|  |                     |  |
-|  | Auto Scaling Group  |  |
-|  |                     |  |
-|  | EC2 Instance        |  |
-|  | EC2 Instance        |  |
-|  +---------------------+  |
-+---------------------------+
-
-        |
-        |
-CloudWatch Monitoring
-        |
-        |
-SNS Notifications
-
-```
 ## Screenshots
 
-The following screenshots show the main components of the AWS infrastructure that were created for this project.
+Screenshots documenting the deployed infrastructure are included below.
 
 ### VPC Configuration
-
-![VPC Configuration](screenshots/vpcs.png)
-
----
 
 ### Subnet Configuration
 
 #### Public Subnets
 
-![Public Subnet A](screenshots/public-subnet-A.png)
-
-![Public Subnet B](screenshots/public-subnet-B.png)
-
 #### Private Subnets
-
-![Private Subnet A](screenshots/private-subnet-A.png)
-
-![Private Subnet B](screenshots/private-subnet-B.png)
-
----
 
 ### Application Load Balancer
 
-![Application Load Balancer](screenshots/alb.png)
-
----
-
 ### Target Group Health Checks
 
-The Target Group health checks confirm that the EC2 instances behind the Load Balancer are healthy and receiving traffic correctly.
-
-![Target Group Healthy](screenshots/target-group-healthy.png)
-
----
+The Target Group health checks confirm that the EC2 instances behind the Load
+Balancer are healthy and receiving traffic correctly.
 
 ### Auto Scaling Group
 
-![Auto Scaling Group](screenshots/autoscaling.png)
-
----
-
 ### CloudWatch Monitoring
 
-![CloudWatch Dashboard](screenshots/cloudwatch-dashboard.png)
-
----
-
 ### CloudWatch Alarms
-
-![CloudWatch Alarm 1](screenshots/cloudwatch-alarm-1.png)
-
-![CloudWatch Alarm 2](screenshots/cloudwatch-alarm-2.png)
-
-
